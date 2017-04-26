@@ -19,6 +19,8 @@ default['app']['session_backend_redis']['port'] = '6380'
 
 default['app']['fpc_backend'] = 'magento'
 
+default['app']['fpc_backend'] = 'magento'
+
 default['app']['primary_user'] = "vagrant"
 default['app']['cron_user'] = "vagrant"
 default['app']['cron_mailto'] = "sysadmin@aligent.com.au"
