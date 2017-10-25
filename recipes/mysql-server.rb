@@ -33,6 +33,9 @@ if node['app']['database_engine'] == 'mysql' || node['app']['database_engine'] =
         data_dir '/var/lib/mysql'
         initial_root_password node['mysql']['server_root_password']
         action [:create, :start]
+        mysqld_options = {
+                "innodb_log_file_size" => "100M",
+        }
     end
 
     mysql_config 'default' do
