@@ -53,10 +53,11 @@ default['app']['templates']['after'] = "cloud-final.service"
 default['app']['templates']['file_list'] = '/etc/default/varnish-elb /etc/my.conf'
 default['app']['templates']['process_template_cookbook'] = 'aligent-magento-dev'
 
-default['varnish']['version'] = '3.0'
-default['varnish']['vcl_cookbook'] = 'aligent-magento-dev'
-default['varnish']['backend_host'] = 'localhost'
-default['varnish']['backend_port'] = 80
+default['varnish']['major_version'] = 3.0
+default['varnish']['reload_cmd'] = '/usr/bin/varnish_reload_vcl'
+default['varnish']['configure']['vcl_template']['cookbook'] = 'aligent-magento-dev'
+default['varnish']['configure']['vcl_template']['variables']['config']['backend_host'] = 'localhost'
+default['varnish']['configure']['vcl_template']['variables']['config']['backend_port'] = 80
 
 default['app']['ioncube']['enabled'] = false
 

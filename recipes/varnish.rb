@@ -26,9 +26,10 @@
 #
 
 if node['app']['varnish']['enabled']
-    include_recipe 'varnish'
+    include_recipe 'varnish::configure'
 
     if node['varnish']['vcl_generated'] == false
+
         # Allows creation of a template VCL instead of generating the file
         # when Chef runs.
         template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}.template" do
