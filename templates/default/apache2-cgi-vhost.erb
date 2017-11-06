@@ -140,21 +140,36 @@ LogFormat "%{X-Frontend-IP}i %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Age
 </Directory>
 
 <Directory <%= node['app']['document_root'] %>/js>
-    AllowOverride FileInfo Nonfatal=All
+    <IfVersion < 2.4>
+        AllowOverride FileInfo
+    </IfVersion>
+    <IfVersion >= 2.4>
+        AllowOverride FileInfo Nonfatal=All
+    </IfVersion>
     <FilesMatch "(?i)\.(php|phtml)$">
         Require all denied
     </FilesMatch>
 </Directory>
 
 <Directory <%= node['app']['document_root'] %>/media>
-    AllowOverride FileInfo Nonfatal=All
+    <IfVersion < 2.4>
+        AllowOverride FileInfo
+    </IfVersion>
+    <IfVersion >= 2.4>
+        AllowOverride FileInfo Nonfatal=All
+    </IfVersion>
     <FilesMatch "(?i)\.(php|phtml)$">
         Require all denied
     </FilesMatch>
 </Directory>
 
 <Directory <%= node['app']['document_root'] %>/skin>
-    AllowOverride FileInfo Nonfatal=All
+    <IfVersion < 2.4>
+        AllowOverride FileInfo
+    </IfVersion>
+    <IfVersion >= 2.4>
+        AllowOverride FileInfo Nonfatal=All
+    </IfVersion>
     <FilesMatch "(?i)\.(php|phtml)$">
         Require all denied
     </FilesMatch>

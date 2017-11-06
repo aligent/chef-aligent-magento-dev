@@ -1,6 +1,6 @@
 #
 ## Cookbook Name:: aligent-magento-dev
-## Recipe:: apache2-cgi-vhost
+## Recipe:: yum-iworx
 ##
 ## Copyright 2015, Aligent Consulting
 ##
@@ -25,49 +25,12 @@
 ##
 #
 
-if platform_family?("rhel") && node['platform_version'].to_f >= 7.0
-    apache_module 'proxy' do
-        enable true
-    end
-
-#    apache_module 'proxy_http' do
-#        enable true
-#    end
-
-    apache_module 'proxy_fcgi' do
-        enable true
-    end
-
-    apache_conf 'php-fpm' do
-      enable true
-    end
-else
-    include_recipe 'aligent-magento-dev::yum-iworx'
-
-    package 'mod_fastcgi' do
-      action :install
-    end
-
-    apache_module 'fastcgi' do
-        enable true
-        conf true
-    end
+# Configure the Nexcess yum repo so we can match their php versions
+yum_repository "iworx" do
+    description "Interworx Repo"
+    baseurl "http://updates.interworx.com/iworx-release/RPMS/latest/$basearch/"
+    gpgcheck true
+    gpgkey "http://updates.interworx.com/iworx-release/RPM-GPG-KEY-INTERWORX"
+    enabled true
+    includepkgs "mod_fastcgi*"
 end
-
-apache_module 'version' do
-    enable true
-end
-
-template "#{node[:apache][:dir]}/sites-available/#{node['app']['name']}.conf" do
-  source "apache2-cgi-vhost.erb"
-  owner "root"
-  group "root"
-  mode 0644
-  cookbook node['app']['vhost_cookbook']
-end
-
-apache_site node['app']['name'] do
-  enable true
-end
-
-include_recipe 'aligent-magento-dev::apache2-common'
