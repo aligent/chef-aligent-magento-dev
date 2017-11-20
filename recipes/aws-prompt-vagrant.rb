@@ -28,6 +28,7 @@
 
 template '/etc/profile.d/cf-stack-environment.sh' do
   source "cf-stack-environment.sh.erb"
+  cookbook node['app']['cf_stack_environment_sh_cookbook']
   mode 0644
   owner 'root'
   group 'root'
