@@ -61,6 +61,8 @@ default['varnish']['configure']['vcl_template']['variables']['config']['backend_
 
 default['app']['ioncube']['enabled'] = false
 
+default['app']['cf_stack_environment_sh_cookbook'] = 'aligent-magento-dev'
+
 default["redis2"]["instances"]["cache"]["port"] = default['app']['cache_backend_redis']['port']
 default["redis2"]["instances"]["cache"]["appendonly"] = "no"
 default["redis2"]["instances"]["cache"]["appendfsync"] = "everysec"
