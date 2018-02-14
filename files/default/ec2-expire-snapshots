@@ -28,6 +28,7 @@ my $aws_secret_access_key_file = $ENV{AWS_SECRET_ACCESS_KEY};
 my $aws_credentials_file       = $ENV{AWS_CREDENTIALS};
 my $use_iam_role               = 0;
 my $region                     = undef;
+my $signature_version          = undef;
 my $ec2_endpoint               = undef;
 my $volume_id_in_tag           = undef;
 my $tag                        = undef;
@@ -61,6 +62,7 @@ GetOptions(
   'aws-credentials-file=s'       => \$aws_credentials_file,
   'use-iam-role'                 => \$use_iam_role,
   'region=s'                     => \$region,
+  'signature-version=s'          => \$signature_version,
   'volume-id-in-tag=s'           => \$volume_id_in_tag,
   'tag=s'                        => \$tag,
   'delete-delay=i'               => \$delete_delay,
@@ -116,6 +118,8 @@ my $ec2 = Net::Amazon::EC2->new(
     ((! $use_iam_role) ? (AWSAccessKeyId  => $aws_access_key_id,) : () ),
     ((! $use_iam_role) ? (SecretAccessKey => $aws_secret_access_key) : () ),
     ($ec2_endpoint ? (base_url => $ec2_endpoint) : ()),
+    ($region ? (region => $region) : ()),
+    ($signature_version ? (signature_version => $signature_version) : ()),
     # ($Debug ? (debug => 1) : ()),
   );
 
