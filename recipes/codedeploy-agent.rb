@@ -45,7 +45,30 @@ execute "install_codedeploy_agent" do
     creates "/etc/init.d/codedeploy-agent"
 end
 
+# Ship codedeploy-agent as disabled; enable/start during userdata, per
+# codedeploy troubleshooting docs for 'AWS CodeDeploy agent is included in your
+# AMI'.  We're not using cfn-init, but this should achieve similar results
+# (userdata is used to execute cfn-init; reordering in cfn-init would be used
+# as a way to delay starting the agent).
+#
+# https://docs.aws.amazon.com/codedeploy/latest/userguide/troubleshooting-auto-scaling.html
+#
+# A deployment fails for new Amazon EC2 instances that are launched as part of
+# an Auto Scaling group. Typically in this scenario, running the scripts in a
+# deployment can prevent the launching of Amazon EC2 instances in the Auto
+# Scaling group. (Other Amazon EC2 instances in the Auto Scaling group may appear
+# to be running normally.) To address this issue, make sure that all other
+# scripts are complete first:
+#    * AWS CodeDeploy agent is not included in your AMI: If you use the
+#      cfn-init command to install the AWS CodeDeploy agent while launching a new
+#      instance, place the agent installation script at the end of the cfn-init
+#      section of your AWS CloudFormation template.
+#    * AWS CodeDeploy agent is included in your AMI: If you include the AWS
+#      CodeDeploy agent in your AMI, configure it so that the agent is in a Stopped
+#      state when the instance is created, and then include a script for starting the
+#      agent as the final step in your cfn-init script library.
+#
 service "codedeploy-agent" do
-    action [ :start, :enable ]
+    action [ :stop, :disable ]
 end
 
