@@ -60,6 +60,7 @@ default['varnish']['configure']['vcl_template']['variables']['config']['backend_
 default['varnish']['configure']['vcl_template']['variables']['config']['backend_port'] = 80
 
 default['app']['ioncube']['enabled'] = false
+default['app']['ioncube']['php_version_major_minor'] = '5.5'
 
 default['app']['cf_stack_environment_sh_cookbook'] = 'aligent-magento-dev'
 
