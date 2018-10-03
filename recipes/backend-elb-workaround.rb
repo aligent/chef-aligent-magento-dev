@@ -30,8 +30,8 @@ if node['app']['varnish']['backend_elb_workaround']
         action :install
     end
 
-    cookbook_file "/etc/varnish/elb.vcl" do
-        source "varnish/elb.vcl"
+    template "/etc/varnish/elb.vcl" do
+        source "varnish/elb.vcl.erb"
         mode 0644
         owner "varnish"
         group "varnish"
