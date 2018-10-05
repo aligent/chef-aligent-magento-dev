@@ -12,8 +12,8 @@ director elb round-robin {
 import directors;
 
 sub vcl_init {
-    new round_robin_director = directors.round_robin();
-    round_robin_director.add_backend(elb1);
-    round_robin_director.add_backend(elb2);
+    new elb = directors.round_robin();
+    elb.add_backend(elb1);
+    elb.add_backend(elb2);
 }
 <%- end -%>

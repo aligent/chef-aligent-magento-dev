@@ -22,7 +22,7 @@ readonly VCL_DIRECTOR_HEADER=$(cat <<EOF
 import directors;
 
 sub vcl_init {
-    new ${DIRECTOR}_director = directors.round_robin();
+    new ${DIRECTOR} = directors.round_robin();
 EOF
 )
 
@@ -39,7 +39,7 @@ function vcl_backend() {
 function vcl_add_backend() {
     local num="${1}"
 
-    echo "    ${DIRECTOR}_director.add_backend(elb${num});"
+    echo "    ${DIRECTOR}.add_backend(elb${num});"
 }
 
 # Resolve a hostname to an array of IP addresses
