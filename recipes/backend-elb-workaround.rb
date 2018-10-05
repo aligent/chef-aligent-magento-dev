@@ -45,7 +45,7 @@ if node['app']['varnish']['backend_elb_workaround']
     end
 
     cookbook_file "/usr/local/bin/generate_backends" do
-        source "varnish/generate_backends"
+        source "varnish/generate_backends_#{node['varnish']['major_version']}"
         mode 0755
         owner "root"
         group "root"
