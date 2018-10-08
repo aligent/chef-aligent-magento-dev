@@ -3,7 +3,17 @@ backend elb1 { .host = "localhost"; .port = "80"; .connect_timeout = 15s; .first
 backend elb2 { .host = "localhost"; .port = "80"; .connect_timeout = 15s; .first_byte_timeout = 3600s; .between_bytes_timeout = 3600s; }
 
 # Round Robin Director
+<%- if node['varnish']['major_version'] == 3.0 -%>
 director elb round-robin {
     { .backend = elb2; }
     { .backend = elb1; }
 }
+<%- elsif node['varnish']['major_version'] == 4.0 -%>
+import directors;
+
+sub vcl_init {
+    new elb = directors.round_robin();
+    elb.add_backend(elb1);
+    elb.add_backend(elb2);
+}
+<%- end -%>
