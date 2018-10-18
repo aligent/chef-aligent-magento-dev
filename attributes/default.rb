@@ -74,6 +74,8 @@ default["redis2"]["instances"]["session"]["appendonly"] = "yes"
 default["redis2"]["instances"]["session"]["appendfsync"] = "everysec"
 default["redis2"]["instances"]["session"]["bgsave"] = false
 
+default['logrotate']['interval'] = 'weekly'
+
 default['cwlogs']['region'] = 'ap-southeast-2'
 default['cwlogs']['state_file_dir'] = '/var/awslogs/state'
 default['cwlogs']['state_file_name'] = 'agent-state'

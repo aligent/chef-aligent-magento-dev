@@ -1,5 +1,8 @@
 <%= node['app']['document_root'] %>/var/log/*log {
-    weekly
+    <%= node['logrotate']['interval'] %>
+<%- if node['logrotate'].key?('magento_rotations') -%>
+    rotate <%= node['logrotate']['magento_rotations'] %>
+<%- end -%>
     missingok
     notifempty
     sharedscripts
