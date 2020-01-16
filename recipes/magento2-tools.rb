@@ -39,8 +39,15 @@ remote_file '/usr/local/bin/modman' do
   mode '755'
 end
 
+if node['n98-magerun2'] and node['n98-magerun2']['version']
+  # e.g. https://files.magerun.net/n98-magerun2-3.2.0.phar
+  n98_source = "https://files.magerun.net/n98-magerun2-#{node['n98-magerun2']['version']}.phar"
+else
+  n98_source = 'https://files.magerun.net/n98-magerun2.phar'
+end
+
 remote_file '/usr/local/bin/n98-magerun2.phar' do
-  source 'https://files.magerun.net/n98-magerun2.phar'
+  source n98_source
   owner 'root'
   group 'root'
   mode '755'
