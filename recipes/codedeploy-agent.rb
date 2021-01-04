@@ -25,7 +25,7 @@
 ##
 #
 
-%w{wget ruby}.each do |pkg|
+%w{wget ruby zip unzip}.each do |pkg|
   package pkg do
     action :install
   end
