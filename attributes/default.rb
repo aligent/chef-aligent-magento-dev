@@ -22,6 +22,8 @@ default['app']['fpc_backend'] = 'magento'
 default['app']['primary_user'] = "vagrant"
 default['app']['cron_user'] = "vagrant"
 default['app']['cron_mailto'] = "sysadmin@aligent.com.au"
+default['app']['flock_cron_run'] = false
+default['app']['flock_setup_cron_run'] = false
 
 default['app']['vhost_cookbook'] = 'aligent-magento-dev'
 
