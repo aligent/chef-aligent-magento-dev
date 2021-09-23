@@ -41,12 +41,4 @@ if node['app']['runs_cron']
     command "/usr/bin/php -c /etc/php/php.ini #{node['app']['document_root']}/bin/magento cron:run >> #{node['app']['document_root']}/var/log/magento.cron.log&"
   end
 
-  cron 'magento_setup_cron' do
-    action :create
-    minute '*/1'
-    user node['app']['cron_user']
-    mailto node['app']['cron_mailto']
-    command "/usr/bin/php -c /etc/php/php.ini #{node['app']['document_root']}/bin/magento setup:cron:run >> #{node['app']['document_root']}/var/log/setup.cron.log&"
-  end
-
 end
