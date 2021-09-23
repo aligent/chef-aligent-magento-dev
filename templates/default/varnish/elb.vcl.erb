@@ -8,7 +8,7 @@ director elb round-robin {
     { .backend = elb2; }
     { .backend = elb1; }
 }
-<%- elsif node['varnish']['major_version'] == 4.0 -%>
+<%- elsif node['varnish']['major_version'] >= 4.0 -%>
 import directors;
 
 sub vcl_init {
