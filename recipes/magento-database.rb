@@ -26,9 +26,6 @@
 #
 
 mysql_root_password = node['mysql']['server_root_password']
-if node['app']['database_engine'] == 'mariadb'
-    mysql_root_password = node['mariadb']['server_root_password']
-end
 
 mysql_connection_info = {
 	:host => '127.0.0.1',
@@ -38,12 +35,12 @@ mysql_connection_info = {
 
 node['app']['mysql'].each do |key, db|
     mysql_database db['database'] do
-        connection mysql_connection_info
+        #connection mysql_connection_info
         action :create
     end
 
-    mysql_database_user db['username'] do
-        connection mysql_connection_info
+    mysql_user db['username'] do
+        #connection mysql_connection_info
         password db['password']
         database_name db['database']
         host db['acl']
@@ -51,21 +48,4 @@ node['app']['mysql'].each do |key, db|
         action :grant
     end
 
-end
-
-# Remove Mariadb's anonymous users
-if node['app']['database_engine'] == 'mariadb'
-    mysql_database_user 'anonymous@localhost' do
-        connection mysql_connection_info
-        username ''
-        host 'localhost'
-        action :drop
-    end
-
-    mysql_database_user 'anonymous@hostname' do
-        connection mysql_connection_info
-        username ''
-        host node['fqdn']
-        action :drop
-    end
 end
