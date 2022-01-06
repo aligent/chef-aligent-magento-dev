@@ -25,6 +25,7 @@
 ##
 #
 
+apache_service_name = node['apache']['service_name']
 
 apache_module "actions" do
     enable true
@@ -48,6 +49,7 @@ if node['app']['ssl']['enabled']
 end
 
 service "apache2" do
+  service_name apache_service_name
   action :reload
 end
 
