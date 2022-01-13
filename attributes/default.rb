@@ -54,7 +54,7 @@ default['app']['templates']['file_list'] = '/etc/default/varnish-elb /etc/my.con
 default['app']['templates']['process_template_cookbook'] = 'aligent-magento-dev'
 
 default['varnish']['major_version'] = 6.1
-default['varnish']['reload_cmd'] = '/usr/bin/varnish_reload_vcl'
+default['varnish']['reload_cmd'] = '/usr/sbin/varnishreload'
 default['varnish']['configure']['vcl_template']['cookbook'] = 'aligent-magento-dev'
 default['varnish']['configure']['vcl_template']['variables']['config']['backend_host'] = 'localhost'
 default['varnish']['configure']['vcl_template']['variables']['config']['backend_port'] = 80

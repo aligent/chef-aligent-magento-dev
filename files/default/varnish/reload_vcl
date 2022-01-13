@@ -4,7 +4,7 @@ export VARNISH_VCL_CONF=/etc/varnish/default.vcl
 export VARNISH_ADMIN_LISTEN_ADDRESS=127.0.0.1
 export VARNISH_ADMIN_LISTEN_PORT=6082
 export VARNISH_SECRET_FILE=/etc/varnish/secret
-varnish_reload_vcl
+/usr/sbin/varnishreload
 
 varnishadm vcl.list | \
 	grep -v active |

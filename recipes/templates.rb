@@ -32,7 +32,7 @@ template '/etc/systemd/system/templates.service' do
   action :create
 end
 
-template '/usr/local/sbin/templates.sh' do
+template '/usr/bin/templates.sh' do
   source 'templates/templates.sh.erb'
   owner 'root'
   group 'root'
@@ -40,7 +40,7 @@ template '/usr/local/sbin/templates.sh' do
   action :create
 end
 
-template '/usr/local/sbin/process-template.sh' do
+template '/usr/bin/process-template.sh' do
   source 'templates/process-template.sh.erb'
   owner 'root'
   group 'root'
