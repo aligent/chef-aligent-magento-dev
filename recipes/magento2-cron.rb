@@ -26,6 +26,18 @@
 
 if node['app']['runs_cron']
 
+  if node['app']['flock_cron_run']
+    cron_run_command = "flock --nonblock /tmp/magento_cron_run.lock /usr/bin/php -c /etc/php/php.ini #{node['app']['document_root']}/bin/magento cron:run >> #{node['app']['document_root']}/var/log/magento.cron.log"
+  else
+    cron_run_command = "/usr/bin/php -c /etc/php/php.ini #{node['app']['document_root']}/bin/magento cron:run >> #{node['app']['document_root']}/var/log/magento.cron.log&"
+  end
+
+  if node['app']['flock_setup_cron_run']
+    setup_cron_run_command = "flock --nonblock /tmp/magento_setup_cron_run.lock /usr/bin/php -c /etc/php/php.ini #{node['app']['document_root']}/bin/magento setup:cron:run >> #{node['app']['document_root']}/var/log/setup.cron.log"
+  else
+    setup_cron_run_command = "/usr/bin/php -c /etc/php/php.ini #{node['app']['document_root']}/bin/magento setup:cron:run >> #{node['app']['document_root']}/var/log/setup.cron.log&"
+  end
+
   #This may start before codedeploy drops the file structure onto the server, so manually create a var/log directory to prevent early errors.
   directory "#{node['app']['document_root']}/var/log" do
     mode '0775'
@@ -38,7 +50,7 @@ if node['app']['runs_cron']
     minute '*/1'
     user node['app']['cron_user']
     mailto node['app']['cron_mailto']
-    command "/usr/bin/php -c /etc/php/php.ini #{node['app']['document_root']}/bin/magento cron:run >> #{node['app']['document_root']}/var/log/magento.cron.log&"
+    command cron_run_command
   end
 
   cron 'magento_setup_cron' do
@@ -46,7 +58,7 @@ if node['app']['runs_cron']
     minute '*/1'
     user node['app']['cron_user']
     mailto node['app']['cron_mailto']
-    command "/usr/bin/php -c /etc/php/php.ini #{node['app']['document_root']}/bin/magento setup:cron:run >> #{node['app']['document_root']}/var/log/setup.cron.log&"
+    command setup_cron_run_command
   end
 
 end
